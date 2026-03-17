@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import config from '~/config';
 import './TileLayer';
 import './Bing';
 import './Yandex';
@@ -33,7 +34,7 @@ function getTempMap(zoom, fullSize, pixelBounds) {
         }
     );
 
-    const map = L.map(container, {fadeAnimation: false, zoomAnimation: false, inertia: false, maxZoom: 18});
+    const map = L.map(container, {fadeAnimation: false, zoomAnimation: false, inertia: false, maxZoom: config.maxZoom});
     map.setView(center, zoom);
     return map;
 }

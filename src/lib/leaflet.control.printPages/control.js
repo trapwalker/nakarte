@@ -8,6 +8,7 @@ import Contextmenu from '~/lib/contextmenu';
 import {renderPages} from './map-render';
 import formHtml from './form.html';
 import {notify} from '~/lib/notifications';
+import config from '~/config';
 import {makePdf} from './pdf';
 import {saveAs} from '~/vendored/github.com/eligrey/FileSaver';
 import {blobFromString} from '~/lib/binary-strings';
@@ -61,7 +62,7 @@ L.Control.PrintPages = L.Control.extend({
             {name: 'A5', width: 148, height: 210}
         ],
 
-        zoomLevels: ['auto', 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        zoomLevels: ['auto', ...Array.from({length: config.maxZoom - 6}, (_, i) => i + 7)],
 
         initialize: function(options) {
             L.Control.prototype.initialize.call(this, options);
@@ -410,8 +411,8 @@ L.Control.PrintPages = L.Control.extend({
             targetMetersPerPixel = scale / (90 / 2.54) / 1.5;
             mapUnitsPerPixel = targetMetersPerPixel / Math.cos(referenceLat * Math.PI / 180);
             let mapZoom = Math.round(Math.log(40075016.4 / 256 / mapUnitsPerPixel) / Math.LN2);
-            mapZoom = Math.min(mapZoom, 18);
-            satZoom = Math.min(satZoom, 18);
+            mapZoom = Math.min(mapZoom, config.maxZoom);
+            satZoom = Math.min(satZoom, config.maxZoom);
             mapZoom = Math.max(mapZoom, 0);
             satZoom = Math.max(satZoom, 0);
             return {mapZoom, satZoom};

@@ -1,6 +1,7 @@
 import ko from 'knockout';
 import L from 'leaflet';
 
+import config from '~/config';
 import '~/lib/leaflet.control.commons';
 import '~/lib/controls-styles/controls-styles.css';
 import * as logging from '~/lib/logging';
@@ -73,7 +74,7 @@ L.Control.JNX = L.Control.extend({
         }
         const layer = this.layerForExport().layer;
         const choices = {};
-        const maxLevel = layer.options.maxNativeZoom || layer.options.maxZoom || 18;
+        const maxLevel = layer.options.maxNativeZoom || layer.options.maxZoom || config.maxZoom;
         let minLevel = Math.max(0, maxLevel - 6);
         if (layer.options.minZoom) {
             minLevel = Math.max(minLevel, layer.options.minZoom);

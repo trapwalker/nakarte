@@ -1,6 +1,7 @@
 import secrets from './secrets';
 
 const config = {
+    maxZoom: 18,
     caption: `
         <a href="https://docs.nakarte.me">Documentation</a> |
         <a href="https://about.nakarte.me">News</a> |

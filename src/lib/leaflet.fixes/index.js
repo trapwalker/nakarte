@@ -109,7 +109,15 @@ function fixDoubleZoomOnMouseWheel() {
     };
 }
 
-function fixAll() {
+function setTileLayerMaxZoom(maxZoom) {
+    const defaultNativeZoom = 18;
+    L.TileLayer.prototype.options.maxZoom = maxZoom;
+    if (maxZoom > defaultNativeZoom) {
+        L.TileLayer.prototype.options.maxNativeZoom = defaultNativeZoom;
+    }
+}
+
+function fixAll(options = {}) {
     fixPanAnimationBug();
     fixTouchDetection();
     fixMapKeypressEvent();
@@ -118,6 +126,9 @@ function fixAll() {
     allowControlHorizontalStacking();
     addTooltipDelay();
     fixDoubleZoomOnMouseWheel();
+    if (options.maxZoom) {
+        setTileLayerMaxZoom(options.maxZoom);
+    }
 }
 
 export {fixAll};

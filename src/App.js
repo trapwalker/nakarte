@@ -60,7 +60,7 @@ function setUp() { // eslint-disable-line complexity
         localStorageKeys: Object.keys(safeLocalStorage),
         mobile: L.Browser.mobile,
     };
-    fixAll();
+    fixAll({maxZoom: config.maxZoom});
 
     function validateMinimizeState(state) {
         state = Number(state);
@@ -85,7 +85,7 @@ function setUp() { // eslint-disable-line complexity
             attributionControl: false,
             inertiaMaxSpeed: 1500,
             worldCopyJump: true,
-            maxZoom: 18
+            maxZoom: config.maxZoom
         }
     );
 

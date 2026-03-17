@@ -2,7 +2,8 @@ import L from "leaflet";
 
 L.Layer.GoogleBase = L.TileLayer.extend({
     options: {
-        subdomains: '0123'
+        subdomains: '0123',
+        maxNativeZoom: 17,
     },
 
     getTileUrl: function(coords) {

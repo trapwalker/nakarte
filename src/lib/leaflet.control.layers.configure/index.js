@@ -5,6 +5,7 @@ import ko from 'knockout';
 import {notify} from '~/lib/notifications';
 import * as logging from '~/lib/logging';
 import safeLocalStorage from '~/lib/safe-localstorage';
+import config from '~/config';
 import './customLayer';
 
 function getLayerDefaultHotkey(layer) {
@@ -464,12 +465,14 @@ function enableConfig(control, {layers, customLayersOrder}, options = {withHotke
                 let form = L.DomUtil.create('form', '', customLayerWindow);
                 L.DomEvent.on(form, 'submit', L.DomEvent.preventDefault);
 
+                const maxZoomOptions = Array.from({length: config.maxZoom - 8}, (_, i) => i + 9);
                 const dialogModel = {
                     name: ko.observable(fieldValues.name),
                     url: ko.observable(fieldValues.url),
                     tms: ko.observable(fieldValues.tms),
                     scaleDependent: ko.observable(fieldValues.scaleDependent),
                     maxZoom: ko.observable(fieldValues.maxZoom),
+                    maxZoomOptions: maxZoomOptions,
                     isOverlay: ko.observable(fieldValues.isOverlay),
                     isTop: ko.observable(fieldValues.isTop),
                     buttons: buttons,
@@ -506,7 +509,7 @@ function enableConfig(control, {layers, customLayersOrder}, options = {withHotke
 <label><input type="checkbox" data-bind="checked: tms" />TMS rows order</label><br />
 
 <label>Max zoom<br>
-<select data-bind="options: [9,10,11,12,13,14,15,16,17,18], value: maxZoom"></select></label>
+<select data-bind="options: maxZoomOptions, value: maxZoom"></select></label>
 <div data-bind="foreach: buttons">
     <a class="button" data-bind="click: $root.buttonClicked.bind(null, $index()), text: caption"></a>
 </div>`;
